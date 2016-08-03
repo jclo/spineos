@@ -1,5 +1,10 @@
 # HEAD
 
+### 14.2.0 (August 3, 2016)
+
+  * Updated the build to comply with the latest Slackware 14.2 distribution.
+
+
 ### 1.2.0 (November 17, 2015)
 
   * moved build scripts to Github,

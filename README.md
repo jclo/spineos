@@ -14,7 +14,7 @@ You can find [here](http://spineos.mobilabs.fr/spineos-doc.html) the instruction
 
 ## License
 
-Copyright (c) 2015 jclo <jclo@mobilabs.fr> (http://www.mobilabs.fr/) 
+Copyright (c) 2015-2016 jclo <jclo@mobilabs.fr> (http://www.mobilabs.fr/) 
 
 This file is subject to the terms and conditions of the GNU Lesser
 General Public License v2.1. See the file LICENSE in the top level

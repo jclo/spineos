@@ -1,8 +1,8 @@
 #!/bin/sh
 #
 # Slackware script to finalyze the build of SpineOS.
-# 
-# copyright 2015 jclo <jclo@mobilabs.fr> (http://www.mobilabs.fr/)
+#
+# copyright 2015-2016 jclo <jclo@mobilabs.fr> (http://www.mobilabs.fr/)
 #
 # This script downloads and activates a firewall based on iptables
 # that drops all UDP/TCP inbound packets except SSH service on port
@@ -25,7 +25,7 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-VERSION="1.2.0"
+VERSION="14.2.0"
 FWPATH="https://raw.github.com/jclo/spineos/${VERSION}"
 OPTION="--no-check-certificate"
 
@@ -39,7 +39,7 @@ OPTION="--no-check-certificate"
 function _set_firewall() {
   cd /etc/rc.d
 
-  # Download it.
+  # Download it:
   echo "Downloading rc.firewall..."
   wget $OPTION $FWPATH/rc.firewall.sh
   if [[ $? -ne 0 ]]; then
@@ -47,7 +47,7 @@ function _set_firewall() {
     exit 1
   fi
 
-  # Ok. Rename it and activate the service.
+  # Ok. Rename it and activate the service:
   echo "Activating rc.firewall service..."
   mv rc.firewall.sh rc.firewall
   chmod +x rc.firewall
@@ -62,7 +62,7 @@ function _force_update_root_password() {
   cat > /root/.bash_profile <<EOF
 #
 # This script forces the admin user to change the admin password after the login.
-# 
+#
 
 echo ' '
 echo 'You MUST immediately change your password.'
@@ -101,34 +101,36 @@ else
   _set_firewall
 fi
 
-# Install a script to force changing the root password at first login.
+# Install a script to force changing the root password at first login:
 _force_update_root_password
 
-# Update version & keyboard map.
-sed -i "s/^.*\bSlackware 14.1\b.*$/SpineOS ${VERSION} (Slackware 14.1)/" /etc/slackware-version
+# Update version & keyboard map:
+sed -i "s/^.*\bSlackware 14.2\b.*$/SpineOS ${VERSION} (Slackware 14.2)/" /etc/slackware-version
 sed -i '4s/.*/ \/usr\/bin\/loadkeys us.map/' /etc/rc.d/rc.keymap
 
+# Do not authorize ssh root login:
+sed -i "s/^PermitRootLogin yes/#PermitRootLogin yes/" /etc/ssh/sshd_config
 
-# Some clean up operations.
+# Some clean up operations:
 
-# Delete cache.
+# Delete the cache:
 if [[ -d "/var/cache/slackware" ]]; then
   echo "Flushing the caches..."
   rm -R "/var/cache/slackware"
 fi
 
-# Delete the curent certificates.
+# Delete the current certificates:
 echo "Deleting the current certificates..."
 cd /etc/ssh
 rm *.pub
 rm *_key
 
-# Delete the history.
+# Delete the history:
 echo "Deleting the bash history..."
 rm /root/.bash_history
 
-# Delete tmp content.
-cd /tmp 
+# Delete tmp content:
+cd /tmp
 find "/tmp" -type f -exec rm {} \;
 
 # Shrink disk if vmware-toolbox-cmd tool is installed:
@@ -136,7 +138,7 @@ if [[ -x "/usr/bin/vmware-toolbox-cmd" ]]; then
   echo "Shrinking the disk 3 times ..."
   vmware-toolbox-cmd disk shrink /
   vmware-toolbox-cmd disk shrink /
-  vmware-toolbox-cmd disk shrink /  
+  vmware-toolbox-cmd disk shrink /
 fi
 
 # --o-
