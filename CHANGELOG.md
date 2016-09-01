@@ -1,9 +1,9 @@
 # HEAD
 
-### 14.2.x (September 1, 2016)
+### 14.2.1 (September 1, 2016)
 
   * Added scripts to install SpineOS/Slackware on OVH VPS SSD.
-  * ...,
+  * Release.
 
 
 ### 14.2.0 (August 3, 2016)
